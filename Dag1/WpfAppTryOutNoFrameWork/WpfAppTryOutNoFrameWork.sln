@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfAppTryOutNoFrameWork", "WpfAppTryOutNoFrameWork\WpfAppTryOutNoFrameWork.csproj", "{CF206306-02EC-4B73-A677-F77DF4BC4892}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CF206306-02EC-4B73-A677-F77DF4BC4892}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF206306-02EC-4B73-A677-F77DF4BC4892}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF206306-02EC-4B73-A677-F77DF4BC4892}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF206306-02EC-4B73-A677-F77DF4BC4892}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {26000021-9485-4EBE-AC40-7A80759C43B7}
+	EndGlobalSection
+EndGlobal

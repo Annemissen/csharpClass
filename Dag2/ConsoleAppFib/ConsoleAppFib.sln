@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppFib", "ConsoleAppFib\ConsoleAppFib.csproj", "{72B2CAF1-CB04-4DB5-83B5-027BBC047945}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{72B2CAF1-CB04-4DB5-83B5-027BBC047945}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72B2CAF1-CB04-4DB5-83B5-027BBC047945}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72B2CAF1-CB04-4DB5-83B5-027BBC047945}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72B2CAF1-CB04-4DB5-83B5-027BBC047945}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FC47EF5B-D7D3-4F9B-837D-84206CE3441C}
+	EndGlobalSection
+EndGlobal

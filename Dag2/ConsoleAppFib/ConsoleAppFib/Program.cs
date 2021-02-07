@@ -14,10 +14,6 @@ namespace ConsoleAppFib
             {
                 Console.WriteLine("0 1");
             }
-            /*else if (limit == 2)
-            {
-                Console.WriteLine("0 1 1");
-            }*/
             else
             {
                 Console.Write("0 1 ");
@@ -36,23 +32,17 @@ namespace ConsoleAppFib
         }
         static void Main(string[] args)
         {
-            Console.Write("Should be 0. Result is: ");
-            fibIterative(0);
+            Console.WriteLine("Indtast grænseværdi");
+            int grænseværdi = Convert.ToInt32(Console.ReadLine());
+            while (grænseværdi != -1)
+            {
+                fibIterative(grænseværdi);
+                Console.WriteLine("Indtast grænseværdi eller -1 for at afslutte");
+                grænseværdi = Convert.ToInt32(Console.ReadLine());
+            }
 
-            Console.Write("Should be 0, 1. Result is: ");
-            fibIterative(1);
 
-            Console.Write("Should be 0, 1, 1. Result is: ");
-            fibIterative(2);
 
-            Console.Write("Should be 0, 1, 1, 2. Result is: ");
-            fibIterative(3);
-
-            Console.Write("Should be 0, 1, 1, 2, 3. Result is: ");
-            fibIterative(4);
-
-            Console.Write("Should be 0, 1, 1, 2, 3, 5. Result is: ");
-            fibIterative(5);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace ConsoleAppPersonData
@@ -27,6 +28,23 @@ namespace ConsoleAppPersonData
         public string Name { get; }
         public int Age { get; }
         public double Weight { get; set; }
+
+        public static List<Person> ReadCSVFile(string filename)
+        {
+            List<Person> people = new List<Person>();
+            using (var file = new StreamReader(filename))
+            {
+                string line;
+                while ((line = file.ReadLine()) != null)
+                {
+                    //Console.WriteLine(line);
+                    Person p = new Person(line);
+                    people.Add(p);
+                }
+            }
+
+            return people;
+        }
 
         public override string ToString()
         {

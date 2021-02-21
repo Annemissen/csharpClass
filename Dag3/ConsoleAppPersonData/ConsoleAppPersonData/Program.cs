@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
+
 
 namespace ConsoleAppPersonData
 {
@@ -9,13 +11,22 @@ namespace ConsoleAppPersonData
         static void Main(string[] args)
         {
             // Making the list of people
-            List<Person> people = MakePersonList();
+            List<Person> peopleList = MakePersonList();
 
-            //Excercise8To10(people);
+            //Excercise8To10(peopleList);
 
             // ----------------------------------------------------
             // PEOPLE CLASS TESTING FOR EXERCISE 11
-            Exercise11(people);
+            //Exercise11(peopleList);
+
+
+            //-----------------------------------------------------
+            // EXERCISE 6 DAY 4: Reading from a file and creating person objects accordingly
+            Exercise6Day4(@"C:\Users\annem\OneDrive\Dokumenter\cshar\Lektioner\Dag3\ConsoleAppPersonData\ConsoleAppPersonData\data.csv");
+
+            //-----------------------------------------------------
+            // EXERCISE 7 DAY 4:
+            Exercise7Day4(peopleList);
         }
 
         static void PrintPersonList(List<Person> people)
@@ -98,5 +109,33 @@ namespace ConsoleAppPersonData
             Console.WriteLine("Should be 8: " + peopleDictionary.Size());
         }
 
+        static void Exercise6Day4(string filename)
+        {
+            //string filename = @"C:\Users\annem\OneDrive\Dokumenter\cshar\Lektioner\Dag3\ConsoleAppPersonData\ConsoleAppPersonData\data.csv";
+            var people = Person.ReadCSVFile(filename);
+            Console.WriteLine("Number of people in data file : " + people.Count);
+        }
+
+       
+        static void Exercise7Day4(List<Person> people)
+        {
+            Console.WriteLine("Original");
+            PrintPersonList(people);
+
+            Console.WriteLine("-------------------");
+            Console.WriteLine("Sorted by age");
+            people.Sort(new SortByAge());
+            PrintPersonList(people);
+
+            Console.WriteLine("-------------------");
+            Console.WriteLine("Sorted by weight");
+            people.Sort(new SortByWeight());
+            PrintPersonList(people);
+
+            Console.WriteLine("-------------------");
+            Console.WriteLine("Sorted by name");
+            people.Sort(new SortByName());
+            PrintPersonList(people);
+        }
     }
 }

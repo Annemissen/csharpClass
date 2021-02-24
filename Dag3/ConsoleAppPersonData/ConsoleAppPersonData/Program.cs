@@ -22,7 +22,9 @@ namespace ConsoleAppPersonData
 
             //-----------------------------------------------------
             // EXERCISE 6 DAY 4: Reading from a file and creating person objects accordingly
-            Exercise6Day4(@"C:\Users\annem\OneDrive\Dokumenter\cshar\Lektioner\Dag3\ConsoleAppPersonData\ConsoleAppPersonData\data.csv");
+            //Exercise6Day4(@"C:\Users\annem\OneDrive\Dokumenter\cshar\Lektioner\Dag3\ConsoleAppPersonData\ConsoleAppPersonData\data.csv");
+            Exercise6Day4(Directory.GetCurrentDirectory() + "/../../../data.csv");
+
 
             //-----------------------------------------------------
             // EXERCISE 7 DAY 4:

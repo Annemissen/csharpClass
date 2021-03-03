@@ -56,9 +56,9 @@ namespace ConsoleAppPersonLinq
             return people;
         }
 
-        public static List<Person> GetPeople()
+        public static List<Person> GetPeople(string s)
         {
-            return ReadCSVFile(Directory.GetCurrentDirectory() + "/../../data1.csv");
+            return ReadCSVFile(s);
         }
 
         public override string ToString()

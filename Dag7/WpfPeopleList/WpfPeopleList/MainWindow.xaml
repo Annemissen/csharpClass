@@ -5,8 +5,63 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfPeopleList"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="MainWindow"  Height="Auto" Width="1100">
+    <Grid x:Name="gridOuter">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <!-- Labels -->
+        <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource labelHeaderStyle}">Selected Person</Label>
+        <Label Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="1" Style="{StaticResource labelHeaderStyle}">List of people</Label>
+
+        <Label Grid.Column="0" Grid.Row="1" Style="{StaticResource labelAttrStyle}" >
+            Name
+        </Label>
+
+        <Label Grid.Column="0" Grid.Row="2" Style="{StaticResource labelAttrStyle}" >
+            Age
+        </Label>
+
+        <Label Grid.Column="0" Grid.Row="3" Style="{StaticResource labelAttrStyle}" >
+            Weight
+        </Label>
+
+        <Label Grid.Column="0" Grid.Row="4" Style="{StaticResource labelAttrStyle}" >
+            Score
+        </Label>
+
+        <Label Grid.Column="0" Grid.Row="5" Style="{StaticResource labelAttrStyle}" >
+            Accepted
+        </Label>
+
+        <!-- Labels for displaying values -->
+        <Label x:Name="nameLbl" Grid.Column="1" Grid.Row="1" Style="{StaticResource labelValueStyle}" Content="{Binding Path=Name}" ></Label>
+        <Label x:Name="ageLbl" Grid.Column="1" Grid.Row="2" Style="{StaticResource labelValueStyle}" Content="{Binding Path=Age}"></Label>
+        <Label x:Name="weightLbl" Grid.Column="1" Grid.Row="3" Style="{StaticResource labelValueStyle}" Content="{Binding Path=Weight}"></Label>
+        <Label x:Name="scoreLbl" Grid.Column="1" Grid.Row="4" Style="{StaticResource labelValueStyle}" Content="{Binding Path=Score}"></Label>
+        <Label x:Name="acceptedLbl" Grid.Column="1" Grid.Row="5" Style="{StaticResource labelValueStyle}" Content="{Binding Path=Accepted}"></Label>
+
+
+        <!--ListView-->
+        <!--<ListBox x:Name="listViewPerson" ItemsSource="{Binding}" Grid.Column="2" Grid.Row="1" Grid.RowSpan="5" 
+                  DisplayMemberPath="ListBoxToString" IsSynchronizedWithCurrentItem="True" Margin="15">
+        </ListBox>-->
+        <ListView x:Name="listViewPerson" ItemsSource="{Binding}" Grid.Column="2" Grid.Row="1" Grid.RowSpan="5" 
+                  DisplayMemberPath="ListViewToString" IsSynchronizedWithCurrentItem="True" Margin="15">
+        </ListView>
+
     </Grid>
 </Window>

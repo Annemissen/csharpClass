@@ -1,18 +1,17 @@
-﻿<Window x:Class="WpfAppPerson.MainWindow"
+﻿<Window x:Class="WpfAppPersonList.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfAppPerson"
+        xmlns:local="clr-namespace:WpfAppPersonList"
         mc:Ignorable="d"
-        Title="MainWindow" Height="Auto" Width="800">
-    
+        Title="MainWindow"  Height="Auto" Width="1100">
     <Grid x:Name="gridOuter">
-        
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition Width="2*"/>
- 
+            <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -25,10 +24,11 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        
+
         <!-- Labels -->
-        <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource labelHeaderStyle}">Person</Label>
-        
+        <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource labelHeaderStyle}">Selected Person</Label>
+        <Label Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="1" Style="{StaticResource labelHeaderStyle}">List of people</Label>
+
         <Label Grid.Column="0" Grid.Row="1" Style="{StaticResource labelAttrStyle}" >
             Name
         </Label>
@@ -50,15 +50,15 @@
         </Label>
         <Label x:Name="changeName" Grid.Column="0" Grid.Row="6" Style="{StaticResource labelAttrStyle}" FontStyle="Oblique">Change Name</Label>
         <Label x:Name="changeScore" Grid.Column="0" Grid.Row="7" Style="{StaticResource labelAttrStyle}" FontStyle="Oblique">Change Score</Label>
-        
+
         <!-- Labels for displaying values -->
         <Label x:Name="nameLbl" Grid.Column="1" Grid.Row="1" Style="{StaticResource labelValueStyle}" Content="{Binding Path=Name}" ></Label>
-        <Label x:Name="ageLbl" Grid.Column="1" Grid.Row="2" Style="{StaticResource labelValueStyle}">Placeholder</Label>
-        <Label x:Name="weightLbl" Grid.Column="1" Grid.Row="3" Style="{StaticResource labelValueStyle}">Placeholder</Label>
+        <Label x:Name="ageLbl" Grid.Column="1" Grid.Row="2" Style="{StaticResource labelValueStyle}" Content="{Binding Path=Age}"></Label>
+        <Label x:Name="weightLbl" Grid.Column="1" Grid.Row="3" Style="{StaticResource labelValueStyle}" Content="{Binding Path=Weight}"></Label>
         <Label x:Name="scoreLbl" Grid.Column="1" Grid.Row="4" Style="{StaticResource labelValueStyle}" Content="{Binding Path=Score}"></Label>
-        <Label x:Name="acceptedLbl" Grid.Column="1" Grid.Row="5" Style="{StaticResource labelValueStyle}">Placeholder</Label>
+        <Label x:Name="acceptedLbl" Grid.Column="1" Grid.Row="5" Style="{StaticResource labelValueStyle}" Content="{Binding Path=Accepted}"></Label>
 
- 
+
         <!-- TextBoxes for changing Name and Score -->
         <TextBox x:Name="txtBoxName" Grid.Column="1" Grid.Row="6" Margin="15" FontSize="20" HorizontalAlignment="Left" Width="250" 
                  TextChanged="NameTextBox_TextChanged">
@@ -67,7 +67,11 @@
         <TextBox x:Name="txtBoxScore" Grid.Column="1" Grid.Row="7" Margin="15" FontSize="20" HorizontalAlignment="Left" Width="250"
                  TextChanged="TxtBoxScore_TextChanged">
         </TextBox>
-        
-        
+
+        <!--ListView-->
+        <ListBox x:Name="listViewPerson" ItemsSource="{Binding}" Grid.Column="2" Grid.Row="1" Grid.RowSpan="7" 
+                  DisplayMemberPath="ListViewToString" IsSynchronizedWithCurrentItem="True" Margin="20">
+        </ListBox>
+
     </Grid>
 </Window>

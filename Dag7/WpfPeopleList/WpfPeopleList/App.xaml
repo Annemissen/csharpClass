@@ -4,6 +4,29 @@
              xmlns:local="clr-namespace:WpfPeopleList"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+
+        <!-- Label style for attributes-->
+        <Style x:Key="labelAttrStyle" TargetType="{x:Type Label}">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="25"/>
+        </Style>
+
+        <!-- Label style for values -->
+        <Style x:Key="labelValueStyle" TargetType="{x:Type Label}">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="Margin" Value="15"/>
+            <Setter Property="FontSize" Value="20"/>
+            <!-- <Setter Property="Margin" Value="0,0,0,5" /> -->
+        </Style>
+
+        <!-- Label style for headlines-->
+        <Style x:Key="labelHeaderStyle" TargetType="{x:Type Label}">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
     </Application.Resources>
 </Application>

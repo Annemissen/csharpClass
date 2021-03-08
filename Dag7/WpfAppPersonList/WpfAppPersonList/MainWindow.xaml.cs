@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -16,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WpfPeopleList
+namespace WpfAppPersonList
 {
     public class Person : INotifyPropertyChanged
     {
@@ -100,14 +99,6 @@ namespace WpfPeopleList
             }
         }
 
-        public string ListViewToString
-        {
-            get
-            {
-                return Name + ", " + Age + " years old";
-            }
-        }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void NotifyPropertyChanged(string propertyName)
@@ -125,22 +116,20 @@ namespace WpfPeopleList
     public partial class MainWindow : Window
     {
         private List<Person> peopleData;
-        private ObservableCollection<Person> obsPepleData;
 
         public MainWindow()
         {
             InitializeComponent();
-            //peopleData = initPeople();
-            obsPepleData = initPeople();
 
-            //// List stuff
-            listViewPerson.ItemsSource = obsPepleData;
-            gridOuter.DataContext = obsPepleData;
+            // List stuff
+            peopleData = initPeople();
+            listViewPerson.ItemsSource = peopleData;
+            gridOuter.DataContext = peopleData;
         }
 
-        private ObservableCollection<Person> initPeople()
+        private List<Person> initPeople()
         {
-            ObservableCollection<Person> people = new ObservableCollection<Person>();
+            List<Person> people = new List<Person>();
 
             Person p1 = new Person("Dorte", 20, 70, "5");
             people.Add(p1);

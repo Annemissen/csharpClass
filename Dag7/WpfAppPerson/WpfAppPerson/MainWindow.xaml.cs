@@ -21,9 +21,9 @@ namespace WpfAppPerson
     {
         private bool accepted;
         private string name;
-        private int score;
+        private string score;
 
-        public Person(string name, int age, double weight, int score)
+        public Person(string name, int age, double weight, string score)
         {
             Name = name;
             Age = age;
@@ -38,7 +38,7 @@ namespace WpfAppPerson
             Name = dataArr[0];
             Age = Int32.Parse(dataArr[1]);
             Weight = Double.Parse(dataArr[2]);
-            Score = Int32.Parse(dataArr[3]);
+            Score = dataArr[3];
         }
 
         public string Name 
@@ -51,7 +51,7 @@ namespace WpfAppPerson
         }
         public int Age { get; }
         public double Weight { get; set; }
-        public int Score 
+        public string Score 
         { 
             get { return score;}
             set
@@ -90,6 +90,13 @@ namespace WpfAppPerson
             return $"{Name} : {Age} years, {Weight} kg, {Score} points, {acc}";
         }
 
+        public string ListBoxToString
+        {
+            get {
+                return Name + ", " + Age + " years old";
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void NotifyPropertyChanged(string propertyName)
@@ -106,9 +113,11 @@ namespace WpfAppPerson
     public partial class MainWindow : Window
     {
         private Person person;
+        private List<Person> peopleData;
+
         public MainWindow()
         {
-            person = new Person("Hanne", 30, 70, 10);
+            person = new Person("Hanne", 30, 70, "10");
             InitializeComponent();
 
             // Labels
@@ -119,11 +128,37 @@ namespace WpfAppPerson
             txtBoxName.Text = person.Name;
             nameLbl.DataContext = person;
 
-            txtBoxScore.Text = person.Score.ToString();
+            txtBoxScore.Text = person.Score;
             scoreLbl.DataContext = person;
+            
         }
 
         public Person Person { get; set; }
+
+        private List<Person> initPeople()
+        {
+            List<Person> people = new List<Person>();
+            
+            Person p1 = new Person("Dorte", 20, 70, "5");
+            people.Add(p1);
+
+            Person p2 = new Person("Jens", 50, 100, "2");
+            people.Add(p2);
+
+            Person p3 = new Person("Nina", 25, 60, "10");
+            people.Add(p3);
+
+            Person p4 = new Person("Hans", 77, 70, "9");
+            people.Add(p4);
+
+            Person p5 = new Person("Henrik", 31, 80, "10");
+            people.Add(p5);
+
+            Person p6 = new Person("Anna", 7, 40, "5");
+            people.Add(p6);
+
+            return people;
+        }
 
         private void NameTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -134,7 +169,7 @@ namespace WpfAppPerson
         private void TxtBoxScore_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (person != null)
-                person.Score = Int32.Parse(((TextBox)sender).Text);
+                person.Score = ((TextBox)sender).Text;
         }
     }
 }

@@ -5,10 +5,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F529B4B3-7E19-4F7F-82C3-E7C7BF971883}</ProjectGuid>
+    <ProjectGuid>{E43E049A-4FAE-49D3-AF9D-02ACA35980E7}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>ModelFirstSample</RootNamespace>
-    <AssemblyName>ModelFirstSample</AssemblyName>
+    <RootNamespace>ModelFirstBloggingTester</RootNamespace>
+    <AssemblyName>ModelFirstBloggingTester</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -78,11 +78,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ThisIsATest.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ThisIsATest.edmx</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -94,13 +89,6 @@
       <DependentUpon>BloggingModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
-    <EntityDeploy Include="ThisIsATest.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ThisIsATest.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="ThisIsATest.edmx.diagram">
-      <DependentUpon>ThisIsATest.edmx</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="BloggingModel.Context.tt">

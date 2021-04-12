@@ -1,0 +1,63 @@
+﻿@model IEnumerable<EntityFrameworkModel.Biografbillet>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.filmnavn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dato)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tid)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sæderække)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.stolenummer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Kunde.navn)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.filmnavn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dato)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tid)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sæderække)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.stolenummer)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Kunde.navn)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>

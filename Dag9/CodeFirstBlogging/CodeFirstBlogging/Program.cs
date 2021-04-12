@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using System.ComponentModel.DataAnnotations;
 
 namespace CodeFirstBlogging
 {
@@ -42,6 +43,7 @@ namespace CodeFirstBlogging
     {
         public int BlogId { get; set; }
         public string Name { get; set; }
+        public string Url { get; set; }
 
         public virtual List<Post> Posts { get; set; }
     }
@@ -60,5 +62,20 @@ namespace CodeFirstBlogging
     {
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Post> Posts { get; set; }
+        public DbSet<User> Users { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>()
+                .Property(u => u.DisplayName)
+                .HasColumnName("display_name");
+        }
+    }
+
+    public class User
+    {
+        [Key]
+        public string Username { get; set; }
+        public string DisplayName { get; set; }
     }
 }

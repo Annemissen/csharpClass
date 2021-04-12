@@ -1,0 +1,66 @@
+﻿@model EntityFrameworkModel.Biografbillet
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Biografbillet</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.filmnavn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.filmnavn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dato)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dato)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sæderække)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sæderække)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.stolenummer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.stolenummer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Kunde.navn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Kunde.navn)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

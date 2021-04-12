@@ -1,0 +1,36 @@
+﻿@model EntityFrameworkModel.Kunde
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Kunde</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.tlfNr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tlfNr)
+        </dd>
+
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.navn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.navn)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.tlfNr })  
+    <!-- @Html.ActionLink("Back to List", "Index") -->
+</p>

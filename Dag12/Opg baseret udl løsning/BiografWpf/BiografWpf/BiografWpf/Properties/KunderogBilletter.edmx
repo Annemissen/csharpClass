@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="KunderIBioModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'KunderIBio.dbo.Biografbillet' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Biografbillet">
+          <Key>
+            <PropertyRef Name="filmnavn" />
+            <PropertyRef Name="dato" />
+            <PropertyRef Name="tid" />
+            <PropertyRef Name="sæderække" />
+            <PropertyRef Name="stolenummer" />
+            <PropertyRef Name="kundeNr" />
+          </Key>
+          <Property Name="filmnavn" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="dato" Type="date" Nullable="false" />
+          <Property Name="tid" Type="time" Precision="7" Nullable="false" />
+          <Property Name="sæderække" Type="int" Nullable="false" />
+          <Property Name="stolenummer" Type="int" Nullable="false" />
+          <Property Name="kundeNr" Type="varchar" MaxLength="12" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kunde">
+          <Key>
+            <PropertyRef Name="tlfNr" />
+          </Key>
+          <Property Name="navn" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="tlfNr" Type="varchar" MaxLength="12" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK__Biografbi__kunde__4AB81AF0">
+          <End Role="Kunde" Type="Self.Kunde" Multiplicity="1" />
+          <End Role="Biografbillet" Type="Self.Biografbillet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kunde">
+              <PropertyRef Name="tlfNr" />
+            </Principal>
+            <Dependent Role="Biografbillet">
+              <PropertyRef Name="kundeNr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="KunderIBioModelStoreContainer">
+          <EntitySet Name="Kunde" EntityType="Self.Kunde" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Biografbillet" EntityType="Self.Biografbillet" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Biografbillet].[filmnavn] AS [filmnavn], 
+    [Biografbillet].[dato] AS [dato], 
+    [Biografbillet].[tid] AS [tid], 
+    [Biografbillet].[sæderække] AS [sæderække], 
+    [Biografbillet].[stolenummer] AS [stolenummer], 
+    [Biografbillet].[kundeNr] AS [kundeNr]
+    FROM [dbo].[Biografbillet] AS [Biografbillet]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Biografbi__kunde__4AB81AF0" Association="Self.FK__Biografbi__kunde__4AB81AF0">
+            <End Role="Kunde" EntitySet="Kunde" />
+            <End Role="Biografbillet" EntitySet="Biografbillet" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="KunderIBioModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Kunde">
+          <Key>
+            <PropertyRef Name="tlfNr" />
+          </Key>
+          <Property Name="navn" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="tlfNr" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Biografbillet" Relationship="Self.FK__Biografbi__kunde__4AB81AF0" FromRole="Kunde" ToRole="Biografbillet" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Biografbillet">
+          <Key>
+            <PropertyRef Name="filmnavn" />
+            <PropertyRef Name="dato" />
+            <PropertyRef Name="tid" />
+            <PropertyRef Name="sæderække" />
+            <PropertyRef Name="stolenummer" />
+            <PropertyRef Name="kundeNr" />
+          </Key>
+          <Property Name="filmnavn" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dato" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="tid" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="sæderække" Type="Int32" Nullable="false" />
+          <Property Name="stolenummer" Type="Int32" Nullable="false" />
+          <Property Name="kundeNr" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Kunde" Relationship="Self.FK__Biografbi__kunde__4AB81AF0" FromRole="Biografbillet" ToRole="Kunde" />
+        </EntityType>
+        <Association Name="FK__Biografbi__kunde__4AB81AF0">
+          <End Role="Kunde" Type="Self.Kunde" Multiplicity="1" />
+          <End Role="Biografbillet" Type="Self.Biografbillet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kunde">
+              <PropertyRef Name="tlfNr" />
+            </Principal>
+            <Dependent Role="Biografbillet">
+              <PropertyRef Name="kundeNr" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="KunderIBioEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Kunde" EntityType="Self.Kunde" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Biografbillet" EntityType="Self.Biografbillet" />
+          <AssociationSet Name="FK__Biografbi__kunde__4AB81AF0" Association="Self.FK__Biografbi__kunde__4AB81AF0">
+            <End Role="Kunde" EntitySet="Kunde" />
+            <End Role="Biografbillet" EntitySet="Biografbillet" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="KunderIBioModelStoreContainer" CdmEntityContainer="KunderIBioEntities">
+          <EntitySetMapping Name="Kunde">
+            <EntityTypeMapping TypeName="KunderIBioModel.Kunde">
+              <MappingFragment StoreEntitySet="Kunde">
+                <ScalarProperty Name="navn" ColumnName="navn" />
+                <ScalarProperty Name="tlfNr" ColumnName="tlfNr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="KunderIBioModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Biografbillet">
+            <EntityTypeMapping TypeName="KunderIBioModel.Biografbillet">
+              <MappingFragment StoreEntitySet="Biografbillet">
+                <ScalarProperty Name="filmnavn" ColumnName="filmnavn" />
+                <ScalarProperty Name="dato" ColumnName="dato" />
+                <ScalarProperty Name="tid" ColumnName="tid" />
+                <ScalarProperty Name="sæderække" ColumnName="sæderække" />
+                <ScalarProperty Name="stolenummer" ColumnName="stolenummer" />
+                <ScalarProperty Name="kundeNr" ColumnName="kundeNr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

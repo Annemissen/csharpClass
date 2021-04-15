@@ -10,130 +10,116 @@ using ToolRentalClassLibrary;
 
 namespace ToolRentalWebApplication.Controllers
 {
-    public class ToolsController : Controller
+    public class ReservationsController : Controller
     {
         private ToolRentalDbContext db = new ToolRentalDbContext();
 
-        // GET: Tools
+        // GET: Reservations
         public ActionResult Index()
         {
-            var toolSet = db.ToolSet.Include(t => t.ToolType);
-            return View(toolSet.ToList());
+            var reservationSet = db.ReservationSet.Include(r => r.Customer).Include(r => r.Tool);
+            return View(reservationSet.ToList());
         }
 
-        public ActionResult Select(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Tool tool = db.ToolSet.Find(id);
-            if (tool == null)
-            {
-                return HttpNotFound();
-            }
-
-            Session["toolId"] = tool.Id;
-
-            return View();
-
-        }
-
-        // GET: Tools/Details/5
+        // GET: Reservations/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tool tool = db.ToolSet.Find(id);
-            if (tool == null)
+            Reservation reservation = db.ReservationSet.Find(id);
+            if (reservation == null)
             {
                 return HttpNotFound();
             }
-            return View(tool);
+            return View(reservation);
         }
 
-        // GET: Tools/Create
+        // GET: Reservations/Create
         public ActionResult Create()
         {
-            ViewBag.ToolTypeRefId = new SelectList(db.ToolTypeSet, "Id", "Name");
+            ViewBag.CustomerRefId = new SelectList(db.CustomerSet, "CustomerId", "Password");
+            ViewBag.ToolRefId = new SelectList(db.ToolSet, "Id", "Id");
             return View();
         }
 
-        // POST: Tools/Create
+        // POST: Reservations/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,ToolTypeRefId")] Tool tool)
+        public ActionResult Create([Bind(Include = "ReservationId,ToolRefId,CustomerRefId,ReservationStatus,Start,End")] Reservation reservation)
         {
             if (ModelState.IsValid)
             {
-                db.ToolSet.Add(tool);
+                db.ReservationSet.Add(reservation);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ToolTypeRefId = new SelectList(db.ToolTypeSet, "Id", "Name", tool.ToolTypeRefId);
-            return View(tool);
+            ViewBag.CustomerRefId = new SelectList(db.CustomerSet, "CustomerId", "Password", reservation.CustomerRefId);
+            ViewBag.ToolRefId = new SelectList(db.ToolSet, "Id", "Id", reservation.ToolRefId);
+            return View(reservation);
         }
 
-        // GET: Tools/Edit/5
+        // GET: Reservations/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tool tool = db.ToolSet.Find(id);
-            if (tool == null)
+            Reservation reservation = db.ReservationSet.Find(id);
+            if (reservation == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ToolTypeRefId = new SelectList(db.ToolTypeSet, "Id", "Name", tool.ToolTypeRefId);
-            return View(tool);
+            ViewBag.CustomerRefId = new SelectList(db.CustomerSet, "CustomerId", "Password", reservation.CustomerRefId);
+            ViewBag.ToolRefId = new SelectList(db.ToolSet, "Id", "Id", reservation.ToolRefId);
+            return View(reservation);
         }
 
-        // POST: Tools/Edit/5
+        // POST: Reservations/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,ToolTypeRefId")] Tool tool)
+        public ActionResult Edit([Bind(Include = "ReservationId,ToolRefId,CustomerRefId,ReservationStatus,Start,End")] Reservation reservation)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(tool).State = EntityState.Modified;
+                db.Entry(reservation).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ToolTypeRefId = new SelectList(db.ToolTypeSet, "Id", "Name", tool.ToolTypeRefId);
-            return View(tool);
+            ViewBag.CustomerRefId = new SelectList(db.CustomerSet, "CustomerId", "Password", reservation.CustomerRefId);
+            ViewBag.ToolRefId = new SelectList(db.ToolSet, "Id", "Id", reservation.ToolRefId);
+            return View(reservation);
         }
 
-        // GET: Tools/Delete/5
+        // GET: Reservations/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tool tool = db.ToolSet.Find(id);
-            if (tool == null)
+            Reservation reservation = db.ReservationSet.Find(id);
+            if (reservation == null)
             {
                 return HttpNotFound();
             }
-            return View(tool);
+            return View(reservation);
         }
 
-        // POST: Tools/Delete/5
+        // POST: Reservations/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Tool tool = db.ToolSet.Find(id);
-            db.ToolSet.Remove(tool);
+            Reservation reservation = db.ReservationSet.Find(id);
+            db.ReservationSet.Remove(reservation);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

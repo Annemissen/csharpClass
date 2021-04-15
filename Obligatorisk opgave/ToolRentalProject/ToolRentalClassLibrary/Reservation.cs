@@ -38,6 +38,7 @@ namespace ToolRentalClassLibrary
             Start = start;
             End = end;
 
+            customer.AddReservation(this);
         }
 
         public Reservation()

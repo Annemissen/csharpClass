@@ -9,7 +9,7 @@ namespace ToolRentalClassLibrary
 {
     public class ToolRentalDbContext : DbContext
     {
-        public ToolRentalDbContext() : base("ToolRentalDbTestThree")
+        public ToolRentalDbContext() : base("ToolRentalDbProjectTestThree")
         {
             Database.SetInitializer(new ToolRentalDBInitializer());
         }

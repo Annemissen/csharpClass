@@ -5,8 +5,17 @@ using System.Linq;
 
 namespace ToolRentalClassLibrary
 {
-    public class ToolRentalDBInitializer : DropCreateDatabaseAlways<ToolRentalDbContext>
+    public class ToolRentalDBInitializer : DropCreateDatabaseIfModelChanges<ToolRentalDbContext>
     {
+        private static ToolRentalDbContext _toolRentalDbContext = null;
+
+        public static ToolRentalDbContext GetToolRentalDbContext()
+        {
+            if (_toolRentalDbContext == null)
+                _toolRentalDbContext = new ToolRentalDbContext();
+            return _toolRentalDbContext;
+        }
+
         public override void InitializeDatabase(ToolRentalDbContext context)
         {
             context.Database.ExecuteSqlCommand(TransactionalBehavior.DoNotEnsureTransaction, string.Format("ALTER DATABASE {0} SET SINGLE_USER WITH ROLLBACK IMMEDIATE", context.Database.Connection.Database));
@@ -59,7 +68,7 @@ namespace ToolRentalClassLibrary
 
 
             // CUSTOMERS
-            context.CustomerSet.Add(new Customer() { CustomerId = "anderhansen@mail.dk", Password = "anders", Name = "Anders Hansen", Address = "F. Vestersgaards Gade 16, 8000 Aarhus C" });
+            context.CustomerSet.Add(new Customer() { CustomerId = "andershansen@mail.dk", Password = "anders", Name = "Anders Hansen", Address = "F. Vestersgaards Gade 16, 8000 Aarhus C" });
             context.CustomerSet.Add(new Customer() { CustomerId = "lonejensen@mail.dk", Password = "lone", Name = "Lone Jensen", Address = "Jens Baggesens Vej 42, 8200 Aarhus N" });
             context.CustomerSet.Add(new Customer() { CustomerId = "hanneandersen@mail.dk", Password = "hanne", Name = "Hanne Andersen", Address = "Langballevej 126, 8320 Mårslet" });
             context.CustomerSet.Add(new Customer() { CustomerId = "sunegammelgaard@mail.dk", Password = "sune", Name = "Sune Gammelgaard", Address = "Langballevej 126, 8320 Mårslet" });
@@ -74,7 +83,7 @@ namespace ToolRentalClassLibrary
             List<Customer> customers = context.CustomerSet.ToList();
 
             // Anders Hansen har indsendt en anmodning om at reserverere en havetromle.
-            Customer andersHansen = customers.Find(c => c.CustomerId == "anderhansen@mail.dk");
+            Customer andersHansen = customers.Find(c => c.CustomerId == "andershansen@mail.dk");
             List<Tool> havetromler = tools.FindAll(t => t.ToolType.Name == "Havetromle");
             Console.WriteLine(havetromler.Count);
             Tool havetromle1 = havetromler[0];

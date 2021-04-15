@@ -36,7 +36,7 @@ namespace ToolRentalWpfApp
             Customer customer = dbContext.CustomerSet.Find(customerId);
             if (customer != null)
             {
-                var customerDialog = new CustomerDialog(customer);
+                var customerDialog = new CustomerDialog(customer, dbContext);
                 customerDialog.ShowDialog();
             }
 

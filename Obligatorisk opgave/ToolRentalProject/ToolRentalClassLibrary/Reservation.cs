@@ -94,5 +94,11 @@ namespace ToolRentalClassLibrary
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        //public override String ToString()
+        //{
+        //    String s = tool.ToolType.Name.ToString() + ": " + tool.ToolType.Description.ToString();
+        //    return s;
+        //}
     }
 }

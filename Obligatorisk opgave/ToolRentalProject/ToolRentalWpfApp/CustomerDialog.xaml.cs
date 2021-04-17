@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,7 +22,8 @@ namespace ToolRentalWpfApp
     public partial class CustomerDialog : Window
     {
         private Customer customer = null;
-        CollectionViewSource ReservationsViewSource;
+        //CollectionViewSource ReservationsViewSource;
+        private ObservableCollection<Reservation> reservations = new ObservableCollection<Reservation>();
         ToolRentalDbContext dbContext;
 
         public CustomerDialog(Customer c, ToolRentalDbContext dbContext)
@@ -32,36 +34,37 @@ namespace ToolRentalWpfApp
             customer = c;
             customerDialogGrid.DataContext = customer;
 
-            ReservationsViewSource = ((CollectionViewSource)(FindResource("reservationsViewSource")));
+            List<Reservation> customersReservations = dbContext.ReservationSet.ToList().FindAll(res => res.CustomerRefId == customer.CustomerId);
+            foreach (Reservation r in customersReservations)
+            {
+                reservations.Add(r);
+            }
+
+            Console.WriteLine("Antal reservationer" + customersReservations.Count);
+
+            lbCustomerReservations.ItemsSource = reservations;
+
             DataContext = this;
         }
 
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ReservationDetails(object sender, SelectionChangedEventArgs e)
         {
+            Reservation res = ((sender as ListBox).SelectedItem as Reservation);
+            int toolId = res.ToolRefId;
+            Tool tool = dbContext.ToolSet.Find(toolId);
 
-        }
+            int toolTypeId = tool.ToolTypeRefId;
+            ToolType toolType = dbContext.ToolTypeSet.Find(toolTypeId);
 
-        private void reservationSelected(object sender, SelectionChangedEventArgs e)
-        {
-            var selectedItem = reservationsListView.SelectedItem;
-            if (selectedItem is Reservation)
-            {
-                Reservation reservation = (Reservation)selectedItem;
-                //navnTextBox.Text = ticket.Kunde.navn;
-                //tlfNrTextBox.Text = ticket.Kunde.tlfNr;
-            }
-        }
+            tbStart.Text = res.Start.ToString();
+            tbEnd.Text = res.End.ToString();
+            tbToolId.Text = toolId.ToString();
+            tbToolName.Text = toolType.Name;
+            tbStatus.Text = res.ReservationStatus.ToString();
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
 
-            System.Windows.Data.CollectionViewSource reservationsViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("reservationsViewSource")));
-            // Load data by setting the CollectionViewSource.Source property:
-            // biografbilletViewSource.Source = [generic data source]
+            //Tool tool = dbContext.ToolSet.ToList().Find(t => t.ToolTypeRefId == )
 
-            //dbContext.ReservationSet.Load();
-            ICollection<Reservation> reservations = customer.Reservations;
-            ReservationsViewSource.Source = reservations;
         }
     }
 }

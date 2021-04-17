@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ToolRentalWpfApp"
         mc:Ignorable="d"
-        Title="CustomerDialog" Height="450" Width="800" Loaded="Window_Loaded">
+        Title="CustomerDialog" Height="450" Width="800">
     
     <Window.Resources>
         <!--https://stackoverflow.com/questions/893428/wpf-global-font-size-->
@@ -24,8 +24,11 @@
         <Style TargetType="{x:Type ListBox}"  BasedOn="{StaticResource smallStyle}"/>
         <!-- ComboBox, RadioButton, CheckBox, etc... -->
 
-        <CollectionViewSource x:Key="reservationsViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Reservation}, CreateList=True}"/>
-
+        <DataTemplate x:Key="customerReservationsTemplate">
+            <StackPanel>
+                <TextBlock Text="{Binding Path=Tool}" />
+            </StackPanel>
+        </DataTemplate>
     </Window.Resources>
     
     <Grid>
@@ -78,53 +81,61 @@
         <Grid x:Name="customerReservationsGrid" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="1.5*"/>
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Grid DataContext="{StaticResource reservationsViewSource}" HorizontalAlignment="Left" Height="190" Margin="5,8,0,0" VerticalAlignment="Top" Width="454">
-                <ListView x:Name="reservationsListView" ItemsSource="{Binding}" Margin="220,10,9.6,210" SelectionMode="Single" SelectionChanged="reservationSelected">
-                    <ListView.ItemContainerStyle>
-                        <Style>
-                            <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
-                            <Setter Property="Control.VerticalContentAlignment" Value="Stretch"/>
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn x:Name="startDateColumn" Header="Dato start" Width="80">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBox Margin="-6,-1" Text="{Binding start, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn x:Name="endDateColumn" Header="Dato slut" Width="80">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBox Margin="-6,-1" Text="{Binding end, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn x:Name="toolColumn" Header="Værktøj" Width="80">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBox Margin="-6,-1" Text="{Binding tool, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn x:Name="reservationStatusColumn" Header="Reservations-status" Width="80">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBox Margin="-6,-1" Text="{Binding reservationStatus, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
+            <!--Header-->
+            <Label Grid.Row="0" Grid.Column="0" Content="Reservationer" FontSize="20" FontWeight="Bold"/>
+            <Label Grid.Row="0" Grid.Column="1" Content="Valgt reservation" FontSize="20" FontWeight="Bold"/>
+
+            <!-- List of reservations -->
+            <ListBox Name="lbCustomerReservations" Grid.Row="1" Grid.Column="0" Width="Auto" Height="100" HorizontalAlignment="Left" Margin="9,8,0,0" VerticalAlignment="Top" SelectionChanged="ReservationDetails" SelectionMode="Single"/>
+
+            <!-- Selected reservation -->
+            <Grid x:Name="selectedReservationDialogGrid" Grid.Row="1" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!--Colon-->
+                <Label Grid.Row="1" Grid.Column="2" Content=":"/>
+                <Label Grid.Row="2" Grid.Column="2" Content=":"/>
+                <Label Grid.Row="3" Grid.Column="2" Content=":"/>
+                <Label Grid.Row="4" Grid.Column="2" Content=":"/>
+                <Label Grid.Row="5" Grid.Column="2" Content=":"/>
+
+                <!--Start date-->
+                <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" Content="Start dato"/>
+                <TextBox Name="tbStart" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="1" HorizontalAlignment="Right"/>
+                <!--End date-->
+                <Label Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1" Content="Slut dato"/>
+                <TextBox Name="tbEnd" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="1" HorizontalAlignment="Right" Text="{Binding Mode=OneWay, Path=End}"/>
+                <!--Tool id-->
+                <Label Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="1" Content="Værktøj id"/>
+                <TextBox Name="tbToolId" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="1" HorizontalAlignment="Right"/>
+                <!--Tool name-->
+                <Label Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="1" Content="Værktøj"/>
+                <TextBox Name="tbToolName" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="1" HorizontalAlignment="Right"/>
+                <!--Reservationstatus-->
+                <Label Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="1" Content="Status"/>
+                <TextBox Name="tbStatus" Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="1" HorizontalAlignment="Right" Text="{Binding Mode=TwoWay, Path=ReservationStatus}"/>
+
             </Grid>
         </Grid>
     </Grid>

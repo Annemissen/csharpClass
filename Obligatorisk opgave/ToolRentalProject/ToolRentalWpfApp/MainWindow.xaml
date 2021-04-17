@@ -15,7 +15,7 @@
     <Grid>
         <!--Header-->
 
-        <TextBox x:Name="customerIdTextBox" HorizontalAlignment="Left" Height="23" Margin="232,135,0,0" TextWrapping="Wrap" Text="KundeId (email)" VerticalAlignment="Top" Width="190"/>
+        <TextBox x:Name="customerIdTextBox" HorizontalAlignment="Left" Height="23" Margin="232,135,0,0" TextWrapping="Wrap" Text="andershansen@mail.dk" VerticalAlignment="Top" Width="190"/>
         <Button x:Name="FindCustomerBtn" Command="{StaticResource FindCustomerCommand}" Content="Søg" HorizontalAlignment="Left" Margin="454,137,0,0" VerticalAlignment="Top" Width="75"/>
         <TextBlock HorizontalAlignment="Left" Margin="215,82,0,0" TextWrapping="Wrap" Text="Find kunde:" VerticalAlignment="Top" FontSize="30" FontWeight="Bold"/>
 

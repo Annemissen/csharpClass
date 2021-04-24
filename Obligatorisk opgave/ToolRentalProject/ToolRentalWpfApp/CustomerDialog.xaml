@@ -5,32 +5,42 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ToolRentalWpfApp"
         mc:Ignorable="d"
-        Title="CustomerDialog" Height="450" Width="800">
-    
+        Title="CustomerDialog" Height="550" Width="850">
+
     <Window.Resources>
         <!--https://stackoverflow.com/questions/893428/wpf-global-font-size-->
         <Style TargetType="{x:Type Control}" x:Key="baseStyle">
             <Setter Property="FontSize" Value="20" />
             <Setter Property="FontFamily" Value="Courier New" />
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="5"/>
         </Style>
+
         <Style TargetType="{x:Type Control}" x:Key="smallStyle">
             <Setter Property="FontSize" Value="12" />
             <Setter Property="FontFamily" Value="Courier New" />
         </Style>
+        <Style TargetType="{x:Type Control}" x:Key="comboBoxStyle">
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontFamily" Value="Courier New" />
+            <Setter Property="Padding" Value="5"/>
+        </Style>
+
         <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource baseStyle}"/>
-        <Style TargetType="{x:Type Button}"   BasedOn="{StaticResource baseStyle}"/>
+        <Style TargetType="{x:Type Button}"   BasedOn="{StaticResource smallStyle}"/>
         <Style TargetType="{x:Type Label}"    BasedOn="{StaticResource baseStyle}"/>
         <Style TargetType="{x:Type TextBox}"  BasedOn="{StaticResource baseStyle}"/>
+        <Style TargetType="{x:Type ComboBox}"  BasedOn="{StaticResource comboBoxStyle}"/>
         <Style TargetType="{x:Type ListBox}"  BasedOn="{StaticResource smallStyle}"/>
         <!-- ComboBox, RadioButton, CheckBox, etc... -->
 
-        <DataTemplate x:Key="customerReservationsTemplate">
-            <StackPanel>
-                <TextBlock Text="{Binding Path=Tool}" />
-            </StackPanel>
-        </DataTemplate>
+        <RoutedUICommand x:Key="DeleteReservationCommand" Text="Slet reservation"></RoutedUICommand>
+
     </Window.Resources>
-    
+    <Window.CommandBindings>
+        <CommandBinding Command="{StaticResource DeleteReservationCommand}" Executed="DeleteReservation"></CommandBinding>
+    </Window.CommandBindings>
+
     <Grid>
 
         <Grid.RowDefinitions>
@@ -55,7 +65,7 @@
             </Grid.RowDefinitions>
 
             <!--Header-->
-            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Content="Customer:" FontSize="30" FontWeight="Bold"/>
+            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Content="Customer" FontSize="30" FontWeight="Bold"/>
 
             <!--Colon-->
             <Label Grid.Row="1" Grid.Column="2" Content=":"/>
@@ -65,16 +75,16 @@
 
             <!--Email/CustomerId-->
             <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" Content="CustomerId"/>
-            <TextBox Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="1" HorizontalAlignment="Right" Text="{Binding Mode=TwoWay, Path=CustomerId}"></TextBox>
+            <TextBox Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="1" Text="{Binding Mode=TwoWay, Path=CustomerId}" IsReadOnly="True"/>
             <!--Name-->
             <Label Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1" Content="Name"/>
-            <TextBox Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="1" HorizontalAlignment="Right" Text="{Binding Mode=TwoWay, Path=Name}"/>
+            <TextBox Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="1" Text="{Binding Mode=TwoWay, Path=Name}" IsReadOnly="True"/>
             <!--Address-->
             <Label Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="1" Content="Address"/>
-            <TextBox Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="1" HorizontalAlignment="Right" Text="{Binding Mode=TwoWay, Path=Address}"/>
+            <TextBox Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="1" Text="{Binding Mode=TwoWay, Path=Address}" IsReadOnly="True"/>
             <!--Password-->
             <Label Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="1" Content="Password"/>
-            <TextBox Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="1" HorizontalAlignment="Right" Text="{Binding Mode=TwoWay, Path=Password}"/>
+            <TextBox Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="1" Text="{Binding Mode=TwoWay, Path=Password}" IsReadOnly="True"/>
 
         </Grid>
 
@@ -87,6 +97,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
 
             <!--Header-->
@@ -122,21 +133,26 @@
 
                 <!--Start date-->
                 <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" Content="Start dato"/>
-                <TextBox Name="tbStart" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="1" HorizontalAlignment="Right"/>
+                <TextBox Name="tbStart" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="1" IsReadOnly="True"/>
                 <!--End date-->
                 <Label Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1" Content="Slut dato"/>
-                <TextBox Name="tbEnd" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="1" HorizontalAlignment="Right" Text="{Binding Mode=OneWay, Path=End}"/>
+                <TextBox Name="tbEnd" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="1" IsReadOnly="True"/>
                 <!--Tool id-->
                 <Label Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="1" Content="Værktøj id"/>
-                <TextBox Name="tbToolId" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="1" HorizontalAlignment="Right"/>
+                <TextBox Name="tbToolId" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="1" IsReadOnly="True"/>
                 <!--Tool name-->
                 <Label Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="1" Content="Værktøj"/>
-                <TextBox Name="tbToolName" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="1" HorizontalAlignment="Right"/>
+                <TextBox Name="tbToolName" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="1" IsReadOnly="True"/>
                 <!--Reservationstatus-->
                 <Label Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="1" Content="Status"/>
-                <TextBox Name="tbStatus" Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="1" HorizontalAlignment="Right" Text="{Binding Mode=TwoWay, Path=ReservationStatus}"/>
-
+                <ComboBox Name="reservationStatusComboBox" Grid.Row="5" Grid.Column="3" Text="{Binding Mode=TwoWay, Path=ReservationStatus}" IsReadOnly="true" IsEditable="true" SelectionChanged="reservationStatusComboBox_SelectionChanged">
+                    <ComboBoxItem Content="Reserveret"/>
+                    <ComboBoxItem Content="Udleveret"/>
+                    <ComboBoxItem Content="Tilbageleveret"/>
+                </ComboBox>
             </Grid>
+            <Button Content="Slet reservation" Command="{StaticResource DeleteReservationCommand}" HorizontalAlignment="Left" Margin="14,1.4,0,0" Grid.Row="2" VerticalAlignment="Top" Width="134"/>
+
         </Grid>
     </Grid>
 </Window>

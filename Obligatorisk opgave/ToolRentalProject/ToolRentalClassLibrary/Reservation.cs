@@ -29,7 +29,7 @@ namespace ToolRentalClassLibrary
                 throw new Exception("Tool is not available during this period");
             }
             Customer = customer;
-            ReservationStatus = ReservationStatus.PENDING;
+            ReservationStatus = ReservationStatus.AFVENTER;
 
             if (start > end)
             {

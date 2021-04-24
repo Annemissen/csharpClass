@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace ToolRentalClassLibrary
 {
-    public class ToolRentalDBInitializer : DropCreateDatabaseIfModelChanges<ToolRentalDbContext>
+    public class ToolRentalDBInitializer : DropCreateDatabaseAlways<ToolRentalDbContext> // IfModelChanges
     {
         private static ToolRentalDbContext _toolRentalDbContext = null;
 
@@ -16,12 +16,12 @@ namespace ToolRentalClassLibrary
             return _toolRentalDbContext;
         }
 
-        //public override void InitializeDatabase(ToolRentalDbContext context)
-        //{
-        //    context.Database.ExecuteSqlCommand(TransactionalBehavior.DoNotEnsureTransaction, string.Format("ALTER DATABASE {0} SET SINGLE_USER WITH ROLLBACK IMMEDIATE", context.Database.Connection.Database));
+        public override void InitializeDatabase(ToolRentalDbContext context)
+        {
+            context.Database.ExecuteSqlCommand(TransactionalBehavior.DoNotEnsureTransaction, string.Format("ALTER DATABASE {0} SET SINGLE_USER WITH ROLLBACK IMMEDIATE", context.Database.Connection.Database));
 
-        //    base.InitializeDatabase(context);
-        //}
+            base.InitializeDatabase(context);
+        }
 
         /**
          * Initiating database content
@@ -93,7 +93,7 @@ namespace ToolRentalClassLibrary
             Customer loneJensen = customers.Find(c => c.CustomerId == "lonejensen@mail.dk");
             Tool vinkelSliberOne = tools.Find(t => t.ToolType.Name == "Vinkelsliber");
             Reservation loneReservation = new Reservation(vinkelSliberOne, loneJensen, new DateTime(2021, 4, 4), new DateTime(2021, 4, 7));
-            loneReservation.ReservationStatus = ReservationStatus.EXTRADITED;
+            loneReservation.ReservationStatus = ReservationStatus.UDLEVERET;
             context.ReservationSet.Add(loneReservation);
 
             
@@ -106,7 +106,7 @@ namespace ToolRentalClassLibrary
             Customer hanneAndersen = customers.Find(c => c.CustomerId == "hanneandersen@mail.dk");
             Tool kompostkværnOne = tools.Find(t => t.ToolType.Name == "Kompostkværn");
             Reservation hanneReservation = new Reservation(kompostkværnOne, hanneAndersen, new DateTime(2021, 4, 1), new DateTime(2021, 4, 3));
-            hanneReservation.ReservationStatus = ReservationStatus.RETURNED;
+            hanneReservation.ReservationStatus = ReservationStatus.TILBAGELEVERET;
             context.ReservationSet.Add(hanneReservation);
 
 
@@ -114,7 +114,7 @@ namespace ToolRentalClassLibrary
             Customer suneGammelgaard = customers.Find(c => c.CustomerId == "sunegammelgaard@mail.dk");
             Tool gulvslibemaskineOne = tools.Find(t => t.ToolType.Name == "Gulvslibemaskine");
             Reservation suneReservation = new Reservation(gulvslibemaskineOne, suneGammelgaard, new DateTime(2021, 4, 2), new DateTime(2021, 4, 4));
-            hanneReservation.ReservationStatus = ReservationStatus.RESERVED;
+            hanneReservation.ReservationStatus = ReservationStatus.RESERVERET;
             context.ReservationSet.Add(suneReservation);
             context.SaveChanges();
 

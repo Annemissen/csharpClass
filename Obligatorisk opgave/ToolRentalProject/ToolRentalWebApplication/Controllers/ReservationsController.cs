@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ToolRentalClassLibrary;
+
 
 namespace ToolRentalWebApplication.Controllers
 {
@@ -36,12 +38,58 @@ namespace ToolRentalWebApplication.Controllers
             return View(reservation);
         }
 
+        //public ActionResult CreateReservationView(string email)
+        //{
+        //    Customer customer = db.CustomerSet.ToList().Find(c => c.CustomerId == email);
+        //    ViewData["customer"] = customer;
+
+        //    List<Tool> tools = db.ToolSet.ToList();
+        //    ViewData["tools"] = db.ToolSet.ToList();
+
+        //    return View(new { customer = customer, tools = tools, });
+        //}
+
         // GET: Reservations/Create
-        public ActionResult Create()
+        public ActionResult Create(int toolId, string startDate, string endDate)
         {
-            ViewBag.CustomerRefId = new SelectList(db.CustomerSet, "CustomerId", "Password");
-            ViewBag.ToolRefId = new SelectList(db.ToolSet, "Id", "Id");
-            return View();
+            Customer customer = db.CustomerSet.ToList().Find(c => c.CustomerId == Session["email"].ToString());
+            Tool tool = db.ToolSet.ToList().Find(t => t.Id == toolId);
+
+
+            DateTime start = stringToDateTime(startDate);
+            DateTime end = stringToDateTime(endDate);
+            Reservation res = new Reservation(tool, customer, start, end);
+            db.ReservationSet.Add(res);
+            db.SaveChanges();
+
+            return View(res);
+
+        }
+
+        // GET: Reservations/Create
+        public ActionResult CreateReservation(int toolId, string startDate, string endDate)
+        {
+            Customer customer = db.CustomerSet.ToList().Find(c => c.CustomerId == Session["email"].ToString());
+            Tool tool = db.ToolSet.ToList().Find(t => t.Id == toolId);
+
+
+            DateTime start = stringToDateTime(startDate);
+            DateTime end = stringToDateTime(endDate);
+            Reservation res = new Reservation(tool, customer, start, end);
+            db.ReservationSet.Add(res);
+            db.SaveChanges();
+            //context.ReservationSet.Add(new Reservation(havetromle1, andersHansen, new DateTime(2021, 4, 2), new DateTime(2021, 4, 4)));
+
+            return RedirectToAction("Details/" + Session["email"], "Customers");
+
+        }
+
+        private DateTime stringToDateTime(string date)
+        {
+            //string[] args = date.Split('-');
+            System.Diagnostics.Debug.WriteLine("TEST TEST TEST: " + date);
+            DateTime dateObj = DateTime.Parse(date);
+            return dateObj;
         }
 
         // POST: Reservations/Create

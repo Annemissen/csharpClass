@@ -1,59 +1,121 @@
-﻿@model ToolRentalClassLibrary.Reservation
+﻿@using ToolRentalClassLibrary
+@using System.Collections.ObjectModel
 
 @{
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h2>Opret reservation for @ViewBag.Customer.Name </h2>
 
-
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Reservation</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.ToolRefId, "ToolRefId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ToolRefId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ToolRefId, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CustomerRefId, "CustomerRefId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("CustomerRefId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CustomerRefId, "", new { @class = "text-danger" })
-            </div>
-        </div>
+<div class="form-horizontal">
+    <h4>Reservation</h4>
+    <hr />
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ReservationStatus, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.ReservationStatus, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ReservationStatus, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    <div class="form-group">
+        start
+        <input textmode="Date" id="start" />
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Start, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Start, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Start, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    <div class="form-group">
+        slut
+        <input textmode="Date" id="end" />
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.End, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.End, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.End, "", new { @class = "text-danger" })
+        @*
+              @{
+                    ToolRentalDbContext db = new ToolRentalDbContext();
+                    Customer customer = db.CustomerSet.ToList().Find(cus => cus.CustomerId == Session["email"].ToString());
+
+                    IEnumerable<SelectListItem> selectlist = new ObservableCollection<SelectListItem>();
+                }
+
+                @foreach (Tool t in db.ToolSet.ToList())
+                {
+                    {
+
+                        SelectListItem item = new SelectListItem();
+                        item.Value = t.Id.ToString();
+
+                        ToolType toolType = db.ToolTypeSet.ToList().Find(tType => t.ToolTypeRefId == tType.Id);
+                        string name = toolType.Name;
+                        item.Text = name;
+                        selectlist.Append(item);
+                    }
+                }
+
+            <DropDownList id="toolSelectList" AutoPostBack="True" OnSelectedIndexChanged="Selection_Change">
+                @foreach (Tool t in db.ToolSet.ToList())
+                {
+
+                    SelectListItem item = new SelectListItem();
+                    item.Value = t.Id.ToString();
+
+                    ToolType toolType = db.ToolTypeSet.ToList().Find(tType => t.ToolTypeRefId == tType.Id);
+                    string name = toolType.Name;
+                    item.Text = name;
+
+                    <!--ToolType toolType = db.ToolTypeSet.ToList().Find(tType => t.ToolTypeRefId == tType.Id);
+                    string name = toolType.Name;
+                    string id = t.Id.ToString();
+                    <ListItem Value="@id"> @name </ListItem>
+                    toolSelectList.Append(item);
+
+                }
+            </DropDownList>*@
+
+        @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.ToolRefId, "ToolRefId", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("ToolRefId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ToolRefId, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.ToolRefId, "ToolRefId", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("ToolRefId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ToolRefId, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CustomerRefId, "CustomerRefId", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("CustomerRefId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CustomerRefId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ReservationStatus, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EnumDropDownListFor(model => model.ReservationStatus, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ReservationStatus, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Start, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Start, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Start, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.End, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.End, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.End, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -61,12 +123,12 @@
             </div>
         </div>
     </div>
-}
+    }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

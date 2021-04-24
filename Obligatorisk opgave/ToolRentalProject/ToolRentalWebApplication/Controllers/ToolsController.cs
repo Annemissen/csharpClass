@@ -39,6 +39,30 @@ namespace ToolRentalWebApplication.Controllers
 
         }
 
+        [HttpPost]
+        public ActionResult CreateReservation(int toolId, string startDate, string endDate)
+        {
+            Customer customer = db.CustomerSet.ToList().Find(c => c.CustomerId == Session["email"].ToString());
+            Tool tool = db.ToolSet.ToList().Find(t => t.Id == toolId);
+
+
+            DateTime start = stringToDateTime(startDate);
+            DateTime end = stringToDateTime(endDate);
+            Reservation res = new Reservation(tool, customer, start, end);
+            db.ReservationSet.Add(res);
+            db.SaveChanges();
+
+            return View(res);
+
+        }
+
+        private DateTime stringToDateTime(string date)
+        {
+            //string[] args = date.Split('-');
+            DateTime dateObj = DateTime.Parse(date);
+            return dateObj;
+        }
+
         // GET: Tools/Details/5
         public ActionResult Details(int? id)
         {

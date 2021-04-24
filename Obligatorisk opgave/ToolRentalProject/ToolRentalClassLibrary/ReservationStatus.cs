@@ -8,6 +8,6 @@ namespace ToolRentalClassLibrary
 {
     public enum ReservationStatus
     {
-        PENDING, RESERVED, EXTRADITED, RETURNED
+        AFVENTER, RESERVERET, UDLEVERET, TILBAGELEVERET
     }
 }

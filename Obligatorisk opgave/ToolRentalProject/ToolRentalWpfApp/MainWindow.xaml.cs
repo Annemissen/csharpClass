@@ -41,5 +41,10 @@ namespace ToolRentalWpfApp
             }
 
         }
+
+        private void customerIdTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

@@ -4,9 +4,6 @@
     {
         static void Main(string[] args)
         {
-            System.Console.WriteLine((2112714811 % 10000) / 1000);
-            System.Console.WriteLine((2112714811 % 1000000) / 10000);
-            System.Console.ReadKey();
         }
 
         public static int getCenturyFromCPR(int CPR)

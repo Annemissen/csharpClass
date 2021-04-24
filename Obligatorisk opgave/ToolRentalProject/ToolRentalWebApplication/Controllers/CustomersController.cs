@@ -13,7 +13,7 @@ namespace ToolRentalWebApplication.Controllers
 {
     public class CustomersController : Controller
     {
-        private ToolRentalDbContext db = new ToolRentalDbContext();
+        private ToolRentalDbContext db = ToolRentalDBInitializer.GetToolRentalDbContext();
 
         // GET: Customers
         public ActionResult Index()
@@ -21,56 +21,32 @@ namespace ToolRentalWebApplication.Controllers
             return View(db.CustomerSet.ToList());
         }
 
-        public ActionResult Details()
+
+
+        // GET: Customers/Details/5
+        public ActionResult Details(string id)
         {
-
-            Customer customer = new Customer()
-            {
-                CustomerId = (string)HttpContext.Session["email"],
-                Name = (string)HttpContext.Session["name"],
-                Address = (string)HttpContext.Session["address"],
-            };
-
-            //IEnumerable<SelectListItem> selectlist = new ObservableCollection<SelectListItem>();
-            //foreach (Tool tool in db.ToolSet)
-            //{
-
-            //    SelectListItem item = new SelectListItem();
-            //    item.Value = tool.Id.ToString();
-            //    item.Text = tool.ToolType.Name + "(" + tool.Id + ")";
-            //    selectlist.Append(item);
-            //}
-            //ViewBag.tools = selectlist;
-
-            return View(customer);
-        }
-
-
-        public ActionResult SelectTool()
-        {
-            return RedirectToAction("Index", "Tools");
-        }
-
-
-        /*
-        // GET: Customers/Details/email
-        public ActionResult Details(string email)
-        {
-            if (email == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Console.WriteLine("EMAIL: " + email);
-            Console.WriteLine();
-            Customer customer = db.CustomerSet.Find(email);
-            Console.WriteLine("TEST: " + customer.ToString());
+
+            Customer customer = db.CustomerSet.Find(Session["email"]);
             if (customer == null)
             {
                 return HttpNotFound();
             }
+
+            ViewBag.reservations = db.ReservationSet.ToList().FindAll(res => res.CustomerRefId == Session["email"].ToString());
+
             return View(customer);
         }
-        */
+
+        //public ActionResult CreateReservation() 
+        //{
+        //    return RedirectToAction("CreateReservation", "Reservations", );
+        //}
+
 
         // GET: Customers/Create
         public ActionResult Create()

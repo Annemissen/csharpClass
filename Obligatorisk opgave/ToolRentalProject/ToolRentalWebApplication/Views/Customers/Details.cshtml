@@ -37,10 +37,65 @@
     </dl>
 </div>
 
-<p>
-    @Html.ActionLink("SelectTool", "SelectTool") |
-    @Html.ActionLink("Edit", "Edit", new { id = Model.CustomerId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<div>
+    <h4>Reservationer</h4>
+
+    <table class="table">
+        @{
+            ToolRentalClassLibrary.ToolRentalDbContext db = ToolRentalClassLibrary.ToolRentalDBInitializer.GetToolRentalDbContext();
+            List<ToolRentalClassLibrary.Reservation> reservations = db.ReservationSet.ToList().FindAll(res => res.CustomerRefId == Model.CustomerId);
+
+        }
+        <tr>
+            <th>
+                Værktøj
+            </th>
+            <th>
+                Id
+            </th>
+            <th>
+                Start
+            </th>
+            <th>
+                Slut
+            </th>
+        </tr>
+
+
+        @foreach (var res in reservations)
+        {
+            int toolId = res.ToolRefId;
+            ToolRentalClassLibrary.Tool tool = db.ToolSet.Find(toolId);
+
+            int toolTypeId = tool.ToolTypeRefId;
+            ToolRentalClassLibrary.ToolType toolType = db.ToolTypeSet.Find(toolTypeId);
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => toolType.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => toolId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => res.Start)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => res.End)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { customerId = Model.CustomerId, toolId = toolId }) @*|
+                        @Html.ActionLink("Edit", "Edit", new { id = item.CustomerId }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.CustomerId })*@
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+    <p>
+        @*@Html.ActionLink("Opret reservation", "CreateReservation", "Reservations", Model.CustomerId.ToString())*@
+        @Html.ActionLink("Opret reservation", "Index", "Tools")
+    </p>
 
 
